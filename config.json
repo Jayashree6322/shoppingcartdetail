@@ -1,0 +1,32 @@
+{
+  "items": [
+    { "name": "Apple", "category": "Fruit", "price": 100, "quantity": 2 },
+    { "name": "Banana", "category": "Fruit", "price": 80, "quantity": 4 },
+    { "name": "Carrot", "category": "Vegetable", "price": 60, "quantity": 3 },
+    { "name": "Tomato", "category": "Vegetable", "price": 40, "quantity": 5 },
+    { "name": "Notebook", "category": "Stationery", "price": 10, "quantity": 8 },
+    { "name": "Pen", "category": "Stationery", "price": 5, "quantity": 20 },
+    { "name": "Eraser", "category": "Stationery", "price": 4, "quantity": 10 },
+    { "name": "Orange", "category": "Fruit", "price": 50, "quantity": 6 },
+    { "name": "Potato", "category": "Vegetable", "price": 20, "quantity": 7 },
+    { "name": "Scale", "category": "Stationery", "price": 15, "quantity": 9 }
+  ],
+  "itemDiscounts": {
+    "Apple": 5,
+    "Tomato": 6,
+    "Notebook": 10
+  },
+  "categoryDiscounts": {
+    "Fruit": 2,
+    "Vegetable": 3,
+    "stationery": 5
+  },
+  "taxes": {
+    "Fruit": 4,
+    "Vegetable": 7,
+    "Stationery": 9
+  },
+  "promoCode": "SAVE10",
+  "promoCodeRate": 10,
+  "offerItems": ["Banana", "Carrot", "Scale"]
+}
