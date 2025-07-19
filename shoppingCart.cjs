@@ -12,16 +12,19 @@ const {
 const { getQuantity, getDiscountRate, getTaxRate, finalDiscountAmount } = require('./function.cjs');
 
 
-const result = items.map((item) => {
+const shoppingCart = items.map((item) => {
    const payableQuantity = getQuantity(item , offerItems);
    const total = item.price * payableQuantity;
+   
+   const { item: itemRate, category: categoryRate } = getDiscountRate(item, itemDiscounts, categoryDiscounts);
+   const discountRate = itemRate || categoryRate;
+   const discountAmount = total * discountRate;
+   const discountedTotal = total - discountAmount;
 
-   const discountAmount = total * getDiscountRate(item , itemDiscounts, categoryDiscounts);
-   const totalAmount = total - discountAmount;
+   const finalDiscount = finalDiscountAmount(discountedTotal);
 
-   const totalDiscountAmount = finalDiscountAmount(totalAmount);
-   const taxAmount = totalDiscountAmount * getTaxRate(item, taxes);
-   const finalTaxAmount = totalDiscountAmount + taxAmount;
+   const taxAmount = finalDiscount * getTaxRate(item, taxes);
+   const finalAmount = finalDiscount + taxAmount;
 
 return {
     Name:item.name,
@@ -29,14 +32,14 @@ return {
     Quantity:item.quantity,
     PayableQuantity:payableQuantity,
     Total:total,
-    FinalDiscountAmount:Math.round(totalDiscountAmount),
-    FinalTaxAmount:Math.round(finalTaxAmount),
+    FinalDiscountAmount:Math.round(finalDiscount),
+    FinalAmount:Math.round(finalAmount),
 };
 }); 
 
-const totalAmount = result.reduce((acc, item) => acc + item.FinalTaxAmount, 0);
+const totalAmount = shoppingCart.reduce((acc, item) => acc + item.FinalAmount, 0);
 const promoCodeDiscount = promoCode === "SAVE10" ? totalAmount * (promoCodeRate / 100) : 0;
 const finalPromoCodeAmount = totalAmount - promoCodeDiscount;
 
-console.table(result);
+console.table(shoppingCart);
 console.log(Math.round(finalPromoCodeAmount));
