@@ -6,10 +6,8 @@ const getQuantity = (item , offerItems) =>
 const getDiscountRate = (item, itemDiscounts, categoryDiscounts) => {
     const itemDiscount = itemDiscounts[item.name];
     const categoryDiscount = categoryDiscounts[item.category];
-    return {
-        item: itemDiscount ? itemDiscount / 100 : 0,
-        category: categoryDiscount ? categoryDiscount / 100 : 0
-    };
+    const discountRate = itemDiscount > 0 ? itemDiscount/100 : categoryDiscount/100;
+    return discountRate || 0;
 };
 const getTaxRate = (item, taxes) => taxes[item.category]/100;
 

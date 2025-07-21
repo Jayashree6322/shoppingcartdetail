@@ -14,12 +14,11 @@ const { getQuantity, getDiscountRate, getTaxRate, finalDiscountAmount } = requir
 
 const shoppingCart = items.map((item) => {
    const payableQuantity = getQuantity(item , offerItems);
-   const total = item.price * payableQuantity;
+   const totalAmount = item.price * payableQuantity;
    
-   const { item: itemRate, category: categoryRate } = getDiscountRate(item, itemDiscounts, categoryDiscounts);
-   const discountRate = itemRate || categoryRate;
-   const discountAmount = total * discountRate;
-   const discountedTotal = total - discountAmount;
+   const discountRate = getDiscountRate(item, itemDiscounts, categoryDiscounts) || 0;;
+   const discountAmount = totalAmount * discountRate;
+   const discountedTotal = totalAmount - discountAmount;
 
    const finalDiscount = finalDiscountAmount(discountedTotal);
 
@@ -31,7 +30,7 @@ return {
     category:item.category,
     Quantity:item.quantity,
     PayableQuantity:payableQuantity,
-    Total:total,
+    TotalAmount:totalAmount,
     FinalDiscountAmount:Math.round(finalDiscount),
     FinalAmount:Math.round(finalAmount),
 };
